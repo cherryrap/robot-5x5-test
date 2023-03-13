@@ -1,0 +1,173 @@
+$grey: #9EAFC7;
+$marginOrPadding: 16px;
+
+.App {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 $marginOrPadding;
+
+  &__header {
+    display: flex;
+    position: relative;
+    align-items: center;
+    flex-direction: column;
+    background-color: #C5AF6A;
+    height: 150px;
+    width: 100%;
+    padding: $marginOrPadding;
+    color: white;
+  }
+
+  &__logo {
+    animation: App-logo-moving infinite 20s linear;
+    height: 80px;
+  }
+
+  &__body {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    padding: $marginOrPadding;
+    height: 100%;
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  &__nav {
+    &-row {
+      display: flex;
+      align-items: center;
+      text-wrap: avoid;
+
+      &+& {
+        margin-top: $marginOrPadding;
+      }
+
+      input {
+        display: inline-block;
+        max-width: 40px;
+        margin: 0 4px;
+      }
+    }
+  }
+
+  &__grid {
+    display: flex;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    //width: 100%;
+    flex-wrap: wrap;
+    margin-top: $marginOrPadding;
+    width: calc((60px + 2px) * 5);
+
+    &-cell {
+      width: 60px;
+      height: 60px;
+      background-color: rgb($grey, 0.5);
+      border: 1px solid white;
+      flex-basis: calc((100% - 5*2px) / 5);
+    }
+  }
+
+  &__robot {
+    background-image: url('img/robot-up.svg');
+    display: inline-block;
+    position: absolute;
+    user-select: none;
+    padding: 0;
+    border: none;
+    outline: none;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 50px;
+    height: 50px;
+    bottom: calc((62px - 50px)/2 + (4 * 62px));
+    left: calc((62px - 50px)/2) + (4 * 62px);
+  }
+
+  &__button {
+    display: flex;
+    flex-direction: column;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid $grey;
+    color: $grey;
+    font-weight: 700;
+    font-size: 16px;
+    background-color: transparent;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &:hover, &:active {
+      box-shadow: black;
+      background-color: rgb($grey, 0.2);
+    }
+
+    &_isBig {
+      width: 80px;
+      height: 80px;
+    }
+
+    &_isSeparate {
+      margin-left: $marginOrPadding;
+    }
+
+    &-icon {
+      display: inline-block;
+      position: relative;
+      user-select: none;
+      padding: 0;
+      border: none;
+      outline: none;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      width: 32px;
+      height: 32px;
+
+      &_icon {
+        &_up, &_left, &_right {
+          background-image: url('img/arrow-up.svg');
+        }
+
+        &_up {
+          width: 36px;
+          height: 36px;
+        }
+
+        &_left {
+          transform: rotate(-90deg);
+        }
+
+        &_right {
+          transform: rotate(90deg);
+        }
+
+        &_info {
+          background-image: url('img/info.svg');
+        }
+      }
+    }
+  }
+}
+
+@keyframes App-logo-moving {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
