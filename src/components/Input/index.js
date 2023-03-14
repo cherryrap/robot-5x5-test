@@ -172,7 +172,9 @@ class Input extends React.Component {
   render() {
     const {
       after,
+      allowNegative,
       autoComplete,
+      decimalScale,
       disabled,
       error,
       label,
@@ -205,9 +207,11 @@ class Input extends React.Component {
         >
           {label && (<label className={b(`label`)}>{label}</label>)}
           <Control
+            allowNegative={allowNegative}
             autoComplete={autoComplete}
             className={b(`control`)}
             disabled={disabled}
+            decimalScale={decimalScale}
             name={name}
             onBlur={this.blur}
             onFocus={this.focus}
@@ -243,6 +247,7 @@ class Input extends React.Component {
 }
 
 Input.defaultProps = {
+  allowNegative         : true,
   autoComplete          : `off`,
   disabled              : false,
   invalid               : false,
@@ -253,7 +258,7 @@ Input.defaultProps = {
   select                : false,
   setTouched            : _.noop,
   touched               : false,
-  type                  : `number`,
+  type                  : `tel`,
   value                 : ``,
 };
 

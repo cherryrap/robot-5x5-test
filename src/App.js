@@ -61,13 +61,13 @@ const App = () => {
                 break;
         }
         setParams({ y, x });
-        setMessage(`Robot moved to the position (${x}, ${y})`);
+        setMessage(`Robot's moved to (${x}, ${y})`);
     };
 
     const place = () => {
         setParams({ y: _.toNumber(newY), x: _.toNumber(newX) });
         setDirection(newCardinalDirection);
-        setMessage(`Robot moved to the position (${newX}, ${newY}), facing ${filteredDirection(newCardinalDirection)}`);
+        setMessage(`Robot's moved to (${newX}, ${newY}), facing ${filteredDirection(newCardinalDirection)}`);
     };
 
     const errorMessage =`Not an integer between ${AXIS_MIN} and ${AXIS_MAX}`;
@@ -94,7 +94,7 @@ const App = () => {
                         <Button
                             icon='info'
                             isMarginLeft
-                            onClick={() => setMessage(`The Robot is on (${params.x},${params.y}), facing: ${filteredDirection(direction)}`)}
+                            onClick={() => setMessage(`Report: ${params.x}, ${params.y}, ${filteredDirection(direction)}`)}
                         />
                     </div>
                     <div className={b('nav-row')}>
@@ -126,7 +126,13 @@ const App = () => {
                                 value={newCardinalDirection}
                             />
                         </div>
-                        <Button isDisabled={isSubmitDisabled} isSubmit onClick={() => place()}>Place</Button>
+                        <Button
+                            isDisabled={isSubmitDisabled}
+                            isSubmit
+                            onClick={() => isSubmitDisabled ? _.noop : place()}
+                        >
+                            Place
+                        </Button>
                     </div>
                     <div className={b('nav-row')}>{message}</div>
                 </div>
