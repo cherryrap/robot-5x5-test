@@ -1,0 +1,85 @@
+@import "../../assets/constants";
+
+.Button {
+  display: flex;
+  flex-direction: column;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid $grey;
+  color: $grey;
+  font-weight: 700;
+  font-size: 16px;
+  background-color: transparent;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &:hover, &:active {
+    box-shadow: black;
+    background-color: rgb($grey, 0.2);
+  }
+
+  &_isBig {
+    width: 80px;
+    height: 80px;
+  }
+
+  &_isDisabled {
+    background-color: rgb($grey, 0.2) !important;
+    color: rgb($grey, 0.7) !important;
+    cursor: unset;
+  }
+
+  &_isMarginLeft {
+    margin-left: $marginOrPadding;
+  }
+
+  &_isSubmit {
+    border-radius: 8px;
+    height: fit-content;
+    padding: 8px $marginOrPadding;
+    border: 1px solid $grey;
+    margin-left: $marginOrPadding;
+    color: $whiteColor;
+    background-color: $golden;
+    width: auto;
+
+    &:hover, &:active {
+      color: $lightGreen;
+      background-color: rgb($lightGreen, 0.2);
+    }
+  }
+
+  &__icon {
+    display: inline-block;
+    position: relative;
+    user-select: none;
+    padding: 0;
+    border: none;
+    outline: none;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 32px;
+    height: 32px;
+
+    &_iconName {
+      &_up, &_left, &_right {
+        background-image: url('img/arrow-up.svg');
+      }
+
+      &_left {
+        transform: rotate(-90deg);
+      }
+
+      &_right {
+        transform: rotate(90deg);
+      }
+
+      &_info {
+        background-image: url('img/info.svg');
+      }
+    }
+  }
+}

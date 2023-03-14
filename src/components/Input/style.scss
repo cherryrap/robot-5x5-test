@@ -1,0 +1,128 @@
+@import "../../assets/constants";
+
+.Input {
+  display: flex;
+  height: 52px;
+  position: relative;
+  align-items: center;
+  justify-content: flex-end;
+  background-color: $whiteColor;
+  color: $darkGreen;
+  font-size: 16px;
+  font-weight: 500;
+
+  &_invalid {
+    .Input__control {
+      border-color: red !important;
+    }
+
+    .Input__error {
+      position: absolute;
+      z-index: 20;
+      bottom: -32px;
+    }
+  }
+
+  *:focus {
+    outline-color: $lightGreen;
+  }
+
+  &__control {
+    width: 120px;
+    caret-color: $darkGreen;
+    border: 1px solid $grey;
+    border-radius: 4px;
+    padding: 4px 8px;
+    position: relative;
+    z-index: 10;
+    margin: 0 0 0 16px;
+    color: $darkGreen;
+    font-size: 16px;
+    font-weight: 600;
+
+    &_transparent {
+      color: transparent;
+    }
+  }
+
+  &__label {
+    align-items: center;
+    display: flex;
+  }
+
+  &_type {
+    &_number {
+      display: flex;
+    }
+
+    &_select {
+      cursor: pointer !important;
+
+      *:focus {
+        outline: none !important;
+      }
+
+      * {
+        cursor: pointer !important;
+      }
+    }
+  }
+
+  &__error {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: red;
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 16px;
+    width: calc(100% + 32px);
+    left: 0;
+    top: 8px;
+    white-space: nowrap;
+    overflow: visible;
+  }
+
+  &__select {
+    position: absolute;
+    width: 120px;
+    max-height: 250px;
+    height: auto;
+    top: 22px;
+    right: 16px;
+    border: 1px solid $grey;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: $whiteColor;
+    z-index: 20;
+    overflow: unset;
+    padding: 0;
+    overscroll-behavior: none;
+
+    &-item {
+      z-index: 21;
+      display: flex;
+      align-items: center;
+      border: none;
+      text-align: left;
+      font-family: inherit;
+      background-color: $whiteColor;
+      font-weight: 400;
+      padding: 4px 8px;
+      height: 20px;
+      flex-basis: 20px;
+      flex-shrink: 0;
+      cursor: pointer;
+      width: 100%;
+      border-radius: 0;
+
+      &:hover,
+      &_active {
+        background-color: $golden;
+        color: $whiteColor;
+      }
+    }
+  }
+}
