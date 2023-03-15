@@ -5,7 +5,7 @@
 
 I tried to keep it as dry as possible. Keeping Button, Input, functions, constants and state within App.js as modular as possible.
 
-The only exception was Input (which may seem ginormous). I used an already available Input, that I previously wrote myself for 2 reasons: 1) speed / lack of time, 2) to show that I'm flexible with state managements and approaches (not only hooks - App.js, but also simple functional components - Button and class components - Input). I can also white using HOCs (recompose).
+The only exception was Input (which may seem ginormous). I used an already available Input, that I previously wrote myself for 2 reasons: 1) speed / lack of time, 2) to show that I'm flexible with state managements and approaches (not only hooks - App.js, but also simple functional components - Button and class components - Input). I can also write using HOCs (recompose).
 
 2. scss / css choice
 
