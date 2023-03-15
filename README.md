@@ -18,7 +18,7 @@ Some may believe that BEM is outdated. I used it (quickest with it) because the 
 I chose to make it simple, quick and flexible up to 370px screen width. 
 I've stand out by expertise in UX/UI, hence the choice of managing errors and edge cases by the use of Input fields, disabling buttons, normalization, validation, etc...
 
-Also, after you've checked the App, I want to add a dynamic change of AXIS_MAX using the input-slider, which would allow a dynamical change of validation gap and cell quantity on the table. I believe that feature would make my App better & fun.
+Also, after you check the App, I want to add a dynamic change of AXIS_MAX using the input-slider, which would allow a dynamical change of validation gap and cell quantity on the table. I believe that feature would make my App better & fun. I've laid some hay for that.
 
 4. react / js 
 
