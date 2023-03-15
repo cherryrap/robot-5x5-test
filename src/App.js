@@ -13,29 +13,27 @@ import {
     AXIS_MIN
 } from './constants';
 
-const validateAxis = string => !!string && (_.toNumber(string) <= AXIS_MAX) && (_.toNumber(string) >= AXIS_MIN);
+const validateAxis = string => (_.toNumber(string) <= AXIS_MAX) && (_.toNumber(string) >= AXIS_MIN);
 
 const b = b_.lock(`App`);
 
 const App = () => {
-    const [params, setParams] = useState({ y: AXIS_MIN, x: AXIS_MIN });
-    const [direction, setDirection] = useState(DIRECTIONS[0].value);
+    const [params, setParams] = useState({ y: AXIS_MIN, x: AXIS_MIN, direction: DIRECTIONS[0].value });
+    const [placeParams, setPlaceParams] = useState({ y: null,  x: null, direction: DIRECTIONS[0].value });
     const [message, setMessage] = useState(null);
-    const [placeParams, setPlaceParams] = useState({ y: AXIS_MIN,  x: AXIS_MIN });
-    const [placeDirection, setPlaceDirection] = useState(direction);
     const [isDisabled, setIsDisabled] = useState(true);
 
     const filteredDirection = (filter) => _.get(_.filter(DIRECTIONS, ['value', filter]), '[0].label');
 
     const rotate = (to) => {
-        let newDirection = direction;
+        let newDirection = params.direction;
 
         if (to === 'left') {
-            newDirection = (direction === 0) ? 270 : direction - 90;
+            newDirection = (params.direction === 0) ? 270 : params.direction - 90;
         } else if (to === 'right') {
-            newDirection = (direction === 270) ? 0 : direction + 90;
+            newDirection = (params.direction === 270) ? 0 : params.direction + 90;
         }
-        setDirection(newDirection);
+        setParams({ x: params.x, y: params.y, direction: newDirection })
         setMessage(`Rotated the Robot ${to}, now facing ${filteredDirection(newDirection)}`);
     };
 
@@ -43,7 +41,7 @@ const App = () => {
         let x = params.x
         let y = params.y;
 
-        switch (direction) {
+        switch (params.direction) {
             case 0:
                 y = (y === AXIS_MAX) ? y : (params.y + 1);
                 break;
@@ -57,14 +55,13 @@ const App = () => {
                 x = (x === AXIS_MIN) ? x : (params.x - 1);
                 break;
         }
-        setParams({ y, x });
+        setParams({ y, x, direction: params.direction });
         setMessage(`Moved the Robot to (${x}, ${y})`);
     };
 
     const place = () => {
         setParams(placeParams);
-        setDirection(placeDirection);
-        setMessage(`Placed the Robot to (${placeParams.x}, ${placeParams.y}), facing ${filteredDirection(placeDirection)}`);
+        setMessage(`Placed the Robot to (${placeParams.x}, ${placeParams.y}), facing ${filteredDirection(placeParams.direction)}`);
         setIsDisabled(false);
     };
 
@@ -72,10 +69,10 @@ const App = () => {
     const style = {
         bottom: `${(62 * params.y) - 32}px`, // axis-Y movement
         left: `${(62 * params.x) - 32}px`, // axis-X movement
-        transform: `rotate(${direction}deg)`, // turn around
+        transform: `rotate(${params.direction}deg)`, // turn around
     };
 
-    const isSubmitDisabled = _.isNil(placeParams.x) || _.isNil(placeParams.y) || _.isNil(placeDirection) || !validateAxis(placeParams.x) || !validateAxis(placeParams.y);
+    const isSubmitDisabled = _.isNil(placeParams.x) || _.isNil(placeParams.y) || _.isNil(placeParams.direction) || !validateAxis(placeParams.x) || !validateAxis(placeParams.y);
 
     return (
         <div className={b()}>
@@ -107,7 +104,7 @@ const App = () => {
                             icon='info'
                             isDisabled={isDisabled}
                             isMarginLeft
-                            onClick={() => setMessage(`Report: ${params.x}, ${params.y}, ${filteredDirection(direction)}`)}
+                            onClick={() => setMessage(`Report: ${params.x}, ${params.y}, ${filteredDirection(params.direction)}`)}
                         />
                     </div>
                     <div className={b('nav-row')}>
@@ -117,7 +114,7 @@ const App = () => {
                                 decimalScale={0}
                                 error={errorMessage}
                                 label='X-axis'
-                                onChange={value => setPlaceParams({ x: _.toNumber(value), y: placeParams.y })}
+                                onChange={value => setPlaceParams({ ...placeParams, x: _.toNumber(value) })}
                                 validate={validateAxis}
                                 value={placeParams.x}
                             />
@@ -126,23 +123,23 @@ const App = () => {
                                 decimalScale={0}
                                 label='Y-axis'
                                 error={errorMessage}
-                                onChange={value => setPlaceParams({ x: placeParams.x, y: _.toNumber(value) })}
+                                onChange={value => setPlaceParams({  ...placeParams, y: _.toNumber(value) })}
                                 validate={validateAxis}
                                 value={placeParams.y}
                             />
                             <Input
                                 autoComplete='nope'
                                 label='Facing'
-                                onChange={value => setPlaceDirection(value)}
+                                onChange={value => setPlaceParams({ ...placeParams, direction: _.toNumber(value) })}
                                 options={DIRECTIONS}
                                 select
-                                value={placeDirection}
+                                value={placeParams.direction}
                             />
                         </div>
                         <Button
                             isDisabled={isSubmitDisabled}
                             isSubmit
-                            onClick={() => isSubmitDisabled ? _.noop : place()}
+                            onClick={isSubmitDisabled ? _.noop : place}
                         >
                             Place
                         </Button>

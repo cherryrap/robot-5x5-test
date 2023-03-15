@@ -170,10 +170,7 @@ class Input extends React.Component {
     return (
       <div className={b()}>
         <div
-          className={b({
-              invalid : invalid,
-              type    : controlType,
-            })}
+          className={b({ invalid: invalid, type: controlType})}
           onClick={this.onInputClick}
           ref={this.containerRef}
         >
