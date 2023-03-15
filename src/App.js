@@ -34,7 +34,7 @@ const App = () => {
             newDirection = (params.direction === 270) ? 0 : params.direction + 90;
         }
         setParams({ x: params.x, y: params.y, direction: newDirection })
-        setMessage(`Rotated the Robot ${to}, now facing ${filteredDirection(newDirection)}`);
+        setMessage(`${to}()`);
     };
 
     const move = () => {
@@ -56,12 +56,12 @@ const App = () => {
                 break;
         }
         setParams({ y, x, direction: params.direction });
-        setMessage(`Moved the Robot to (${x}, ${y})`);
+        setMessage(`move()`);
     };
 
     const place = () => {
         setParams(placeParams);
-        setMessage(`Placed the Robot to (${placeParams.x}, ${placeParams.y}), facing ${filteredDirection(placeParams.direction)}`);
+        setMessage(`place(${placeParams.x}, ${placeParams.y}, ${filteredDirection(placeParams.direction)})`);
         setIsDisabled(false);
     };
 
@@ -104,7 +104,7 @@ const App = () => {
                             icon='info'
                             isDisabled={isDisabled}
                             isMarginLeft
-                            onClick={() => setMessage(`Report: ${params.x}, ${params.y}, ${filteredDirection(params.direction)}`)}
+                            onClick={() => setMessage(`Output: ${params.x}, ${params.y}, ${filteredDirection(params.direction)}`)}
                         />
                     </div>
                     <div className={b('nav-row')}>
