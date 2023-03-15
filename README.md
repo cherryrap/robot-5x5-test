@@ -26,7 +26,7 @@ As mentioned in the assignment, I chose a preferable react.js framework and deci
 
 Validation of the input fields is managed by a separate extra helper/function. Normalisation of the inputted value is managed by capabilities of react-number-format (not negative integer). I intentionally don't validate a select and have a prefilled value in place. 
 
-Each button corresponds to each separate command. Message highlights what command was put through and what were the changed values. The "disable" functionality allows for the absence of errors. To discard all commands until a valid place() is pushed, the buttons are disabled.
+Each button corresponds to each separate command. Message highlights what command was put through and what were the changed values. The "disable" functionality allows for the absence of errors. To "discard all commands until a valid place() is pushed" the buttons are disabled until the first place() was executed.
 
 left + right commands in code are combined to rotate function for the sake of Dx, DRY and less code.
 
