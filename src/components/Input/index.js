@@ -16,7 +16,6 @@ class Input extends React.Component {
 
     this.state = {
       isSelectOpen: false,
-      touched     : this.props.touched,
     };
 
     this.inputRef = React.createRef();
@@ -43,50 +42,31 @@ class Input extends React.Component {
 
   handleClickOutsideSelect = event => {
     if (
-      this.state.isSelectOpen
-      && this.containerRef
-      && (this.containerRef.current || this.inputRef.current)
-      && (
-        !this.containerRef.current.contains(event.target)
-        || (this.inputRef.current && this.inputRef.current.contains(event.target))
-      )
+      this.state.isSelectOpen && this.containerRef && (this.containerRef.current || this.inputRef.current)
+      && (!this.containerRef.current.contains(event.target) || (this.inputRef.current && this.inputRef.current.contains(event.target)))
     ) {
-      if (this.inputRef.current && this.inputRef.current.contains(event.target)) {
-        event.stopPropagation();
-        event.preventDefault();
-      }
+      if (this.inputRef.current && this.inputRef.current.contains(event.target)) {event.stopPropagation();event.preventDefault();}
       this.closeSelect();
     }
   }
 
   onChange = event => {
-    this.props.onChange(this.props.normalize(event.target.value));
+    this.props.onChange(event.target.value);
   }
 
-  onSelect = ({ label, value }) => {
-    this.setSearch(label);
+  onSelect = ({ value }) => {
     this.props.onChange(value);
     this.closeSelect();
-    this.props.onOptionSelect(value);
   }
 
-  setSearch = event => this.setState({
-    search: _.isString(event) ? event : event.target.value,
-  });
-
   onKeyDown = event => {
-    if (event.keyCode === KEY_CODES.ENTER && this.props.type !== `textarea`) event.preventDefault();
+    if (event.keyCode === KEY_CODES.ENTER) event.preventDefault();
   }
 
   onKeyUp = event => {
     const { onCtrlEnterPress, onEnterPress } = this.props;
-
-    if (this.props.type === `textarea`) {
-      if (onEnterPress && event && event.keyCode === KEY_CODES.ENTER && event.ctrlKey) onEnterPress();
-    } else {
-      if (onEnterPress && event && event.keyCode === KEY_CODES.ENTER && !event.ctrlKey) onEnterPress();
-      if (onCtrlEnterPress && event && event.keyCode === KEY_CODES.ENTER && event.ctrlKey) onCtrlEnterPress();
-    }
+    if (onEnterPress && event && event.keyCode === KEY_CODES.ENTER && !event.ctrlKey) onEnterPress();
+    if (onCtrlEnterPress && event && event.keyCode === KEY_CODES.ENTER && event.ctrlKey) onCtrlEnterPress();
   }
 
   closeSelect = () => {
@@ -111,22 +91,19 @@ class Input extends React.Component {
   }
 
   focus = async () => {
-    const { disabled, name, setTouched } = this.props;
+    const { disabled } = this.props;
     if (disabled) return;
 
     if (_.includes([`select`], this.getControlType())) this.openSelect();
     if (this.inputRef && _.isFunction(this.inputRef.focus)) this.inputRef.focus();
     if (_.get(this.inputRef, `current`) && _.isFunction(this.inputRef.current.focus)) this.inputRef.current.focus();
     if (this.inputRefNumber && _.isFunction(this.inputRefNumber.focus)) this.inputRefNumber.focus();
-    this.setState({  touched: true }, () => setTouched(name));
   }
 
   onInputClick = () => { if (!this.state.isSelectOpen) this.focus();}
 
   validate = () => {
     const { validate, value } = this.props;
-    if (_.isEmpty(value)) this.setState({ search: null });
-
     if (!_.isFunction(validate)) return;
     this.setState({ invalid: !validate(value) });
   }
@@ -178,28 +155,23 @@ class Input extends React.Component {
       disabled,
       error,
       label,
-      name,
       options,
       value,
     } = this.props;
 
-    const {
-      invalid,
-      isSelectOpen,
-      touched,
-    } = this.state;
+    const { invalid, isSelectOpen } = this.state;
 
     const Control = this.getControl();
     const controlProps = this.getControlProps();
     const controlType = this.getControlType();
 
-    const showError = invalid && touched && error;
+    const showError = invalid && error;
 
     return (
-      <React.Fragment>
+      <div className={b()}>
         <div
           className={b({
-              invalid : touched && invalid,
+              invalid : invalid,
               type    : controlType,
             })}
           onClick={this.onInputClick}
@@ -212,7 +184,6 @@ class Input extends React.Component {
             className={b(`control`)}
             disabled={disabled}
             decimalScale={decimalScale}
-            name={name}
             onBlur={this.blur}
             onFocus={this.focus}
             onKeyDown={this.onKeyDown}
@@ -241,7 +212,7 @@ class Input extends React.Component {
           )}
           {after}
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
@@ -251,13 +222,8 @@ Input.defaultProps = {
   autoComplete          : `off`,
   disabled              : false,
   invalid               : false,
-  normalize             : _.identity,
   onChange              : _.noop,
-  onOptionSelect        : _.noop,
-  onRef                 : _.noop,
   select                : false,
-  setTouched            : _.noop,
-  touched               : false,
   type                  : `tel`,
   value                 : ``,
 };

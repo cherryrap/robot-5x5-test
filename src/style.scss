@@ -6,7 +6,10 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 0 $marginOrPadding;
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
 
   &__header {
     display: flex;
@@ -18,6 +21,7 @@
     width: 100%;
     padding: $marginOrPadding;
     color: $whiteColor;
+    margin: 0;
   }
 
   &__logo {

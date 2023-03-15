@@ -18,15 +18,12 @@ const validateAxis = string => !!string && (_.toNumber(string) <= AXIS_MAX) && (
 const b = b_.lock(`App`);
 
 const App = () => {
-    const [params, setParams] = useState({
-        y: AXIS_MIN,
-        x: AXIS_MIN
-    });
+    const [params, setParams] = useState({ y: AXIS_MIN, x: AXIS_MIN });
     const [direction, setDirection] = useState(DIRECTIONS[0].value);
     const [message, setMessage] = useState(null);
-    const [newX, setNewX] = useState(null);
-    const [newY, setNewY] = useState(null);
-    const [newCardinalDirection, setNewCardinalDirection] = useState(direction);
+    const [placeParams, setPlaceParams] = useState({ y: AXIS_MIN,  x: AXIS_MIN });
+    const [placeDirection, setPlaceDirection] = useState(direction);
+    const [isDisabled, setIsDisabled] = useState(true);
 
     const filteredDirection = (filter) => _.get(_.filter(DIRECTIONS, ['value', filter]), '[0].label');
 
@@ -39,7 +36,7 @@ const App = () => {
             newDirection = (direction === 270) ? 0 : direction + 90;
         }
         setDirection(newDirection);
-        setMessage(`Robot's turned ${to} and is now facing ${filteredDirection(newDirection)}`);
+        setMessage(`Rotated the Robot ${to}, now facing ${filteredDirection(newDirection)}`);
     };
 
     const move = () => {
@@ -61,13 +58,14 @@ const App = () => {
                 break;
         }
         setParams({ y, x });
-        setMessage(`Robot's moved to (${x}, ${y})`);
+        setMessage(`Moved the Robot to (${x}, ${y})`);
     };
 
     const place = () => {
-        setParams({ y: _.toNumber(newY), x: _.toNumber(newX) });
-        setDirection(newCardinalDirection);
-        setMessage(`Robot's moved to (${newX}, ${newY}), facing ${filteredDirection(newCardinalDirection)}`);
+        setParams(placeParams);
+        setDirection(placeDirection);
+        setMessage(`Placed the Robot to (${placeParams.x}, ${placeParams.y}), facing ${filteredDirection(placeDirection)}`);
+        setIsDisabled(false);
     };
 
     const errorMessage =`Not an integer between ${AXIS_MIN} and ${AXIS_MAX}`;
@@ -77,7 +75,7 @@ const App = () => {
         transform: `rotate(${direction}deg)`, // turn around
     };
 
-    const isSubmitDisabled = _.isNil(newX) || _.isNil(newY) || _.isNil(newCardinalDirection) || !validateAxis(newX) || !validateAxis(newY);
+    const isSubmitDisabled = _.isNil(placeParams.x) || _.isNil(placeParams.y) || _.isNil(placeDirection) || !validateAxis(placeParams.x) || !validateAxis(placeParams.y);
 
     return (
         <div className={b()}>
@@ -88,11 +86,26 @@ const App = () => {
             <div className={b('body')}>
                 <div className={b('nav')}>
                     <div className={b('nav-row')}>
-                        <Button icon='left' onClick={() => rotate('left')} />
-                        <Button icon='up' isBig onClick={() => move()}>Move</Button>
-                        <Button icon='right' onClick={() => rotate('right')} />
+                        <Button
+                            icon='left'
+                            isDisabled={isDisabled}
+                            onClick={() => rotate('left')}
+                        />
+                        <Button
+                            icon='up'
+                            isBig
+                            isDisabled={isDisabled}
+                            onClick={move}>
+                            Move
+                        </Button>
+                        <Button
+                            isDisabled={isDisabled}
+                            icon='right'
+                            onClick={() => rotate('right')}
+                        />
                         <Button
                             icon='info'
+                            isDisabled={isDisabled}
                             isMarginLeft
                             onClick={() => setMessage(`Report: ${params.x}, ${params.y}, ${filteredDirection(direction)}`)}
                         />
@@ -104,26 +117,26 @@ const App = () => {
                                 decimalScale={0}
                                 error={errorMessage}
                                 label='X-axis'
-                                onChange={value => setNewX(value)}
+                                onChange={value => setPlaceParams({ x: _.toNumber(value), y: placeParams.y })}
                                 validate={validateAxis}
-                                value={newX}
+                                value={placeParams.x}
                             />
                             <Input
                                 allowNegative={false}
                                 decimalScale={0}
                                 label='Y-axis'
                                 error={errorMessage}
-                                onChange={value => setNewY(value)}
+                                onChange={value => setPlaceParams({ x: placeParams.x, y: _.toNumber(value) })}
                                 validate={validateAxis}
-                                value={newY}
+                                value={placeParams.y}
                             />
                             <Input
                                 autoComplete='nope'
                                 label='Facing'
-                                onChange={value => setNewCardinalDirection(value)}
+                                onChange={value => setPlaceDirection(value)}
                                 options={DIRECTIONS}
                                 select
-                                value={newCardinalDirection}
+                                value={placeDirection}
                             />
                         </div>
                         <Button
