@@ -1,8 +1,31 @@
-# Getting Started with Create React App
+<img width="428" alt="Screenshot 2023-03-15 at 12 48 10" src="https://user-images.githubusercontent.com/47773728/225210493-41a6ab27-8de3-45e4-bd2b-d8056bb5ba95.png">
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+1. DRY
+I tried to keep it as dry as possible. Keeping Button, Input, functions, constants and state within APp.js as modular as possible.
+
+The only exception was Input (which may seem ginormous). I used an already available Input, that I previously wrote myself for 2 reasons: 1) speed / lack of time, 2) to show that I'm flexible with state managements and approaches (not only hooks from APP.js, but also simple functional components Button and class components Input). I can also white using HOCs (recompose).
+
+2. scss / css choice
+I chose scss (sass) for the primary reason - speed and I like modifiers. But I can also write in plain css and using styled-components. I believe styled-components could have also worked well here as we have dynamic change of css properties + modifiers are easily replaced with props to styled-components (style constant). 
+
+Some may believe that BEM is outdated. I used it (quickest with it) because the code base that I work with day-to-day and company's major projects are written using it. 
+
+3. visualisation
+I chose to make it simple, quick and flexible up to 370px screen width. 
+
+Also, after you've checked the App, I want to add a dynamic change of AXIS_MAX using the input-slider, which would allow a dynamical change of validation gap and cell quantity on the table.
+
+4. react / js 
+As mentioned in the assignment, I chose a preferable react.js framework and decided to download a few libs for speed and neat Dx (lodash, react-number-format).
+
+Validation of the input fields is managed by a separate extra helper/function. Normalisation of the inputted value is managed by capabilities of react-number-format (not negative integer). I intentionally don't validate a select and have a prefilled value in place. The disabled buttons 
+
+Each button corresponds to each separate command. Message highlights what command was put through and what were the changed values. The "disable" functionality allows for the absence of errors. To discard all commands until a valid place() is pushed, the buttons are disabled.
+
+left + right commands in code are combined to rotate function for the sake of Dx, DRY and less code.
+
+The values (0, 90, 270..) are separated from labels (north, east,...) intentionally. 
 
 In the project directory, you can run:
 
@@ -11,60 +34,5 @@ In the project directory, you can run:
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
